@@ -1,0 +1,44 @@
+body {
+  font-family: monospace, 10pt;
+}
+
+.state {
+  float: left;
+}
+
+th {
+  text-align: left;
+  font-weight: normal;
+}
+
+h2 {
+  clear: both;
+  background: #ccc;
+}
+
+
+tr.not-changed {
+  color:#eee !important;
+}
+
+tr.changed {
+  font-weight:bold;
+}
+
+tr.equals {
+  color: green;
+}
+
+tr.not-equals {
+    color: red !important;;
+}
+
+.state-global {
+  /*display: none;*/
+}
+
+tr.one-sided {
+  text-decoration: underline;
+  display:none;
+  visibility: hidden;
+}
