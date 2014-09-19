@@ -30,49 +30,20 @@ from jinja2 import Environment
 from collections import defaultdict
 from argparse import ArgumentParser
 
+def get_path(filename):
+    if os.path.exists(filename):
+        return os.path.abspath(filename)
+    else:
+        return os.path.abspath(os.path.join(os.path.dirname(__file__), filename))
 
-TEMPLATE = """
-<html>
-  <head>
-  <link href="nusmv-style.css" rel="stylesheet" type="text/css" />
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js" language="javascript"></script>
-  <script src="/home/weigla/Projects/viztracer/filter.js" language="javascript"></script>
-  </head>
-  <body>
-  <div class="helper">
-    <h2>Modules</h2>
-    {% for mod in trace.modules_names() %}
-    <div>
-        <h3>{{mod}}</h3>
-        <ul>
-            <li><label><input type="checkbox" checked value="div.{{mod}} tr"/>Hide all</label></li>
-            {% for var in trace.variables_in_module(mod) %}
-                <li><label><input type="checkbox" checked value="div.{{mod}} tr.{{var}}"/> {{var}}</label></li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endfor %}
-  </div>
+def read(filename):
+    with open(get_path(filename)) as fp:
+        return fp.read()
 
-  {% for l in range(length) %}
-  <h2>Step {{ l + 1 }}</h2>
-    {% for mod in sorted(modules.keys()) %}
-    <div class="state {{mod}}">
-      <h3>{{mod}}</h3>
-      <table>
-        {% for var in sorted(modules[mod][l].keys()) %}
-          <tr class="{{ classes(modules, mod, l, var) }}">
-             <th>{{var}}</th>
-             <td>{{modules[mod][l][var]}}</td>
-          </tr>
-        {% endfor %}
-      </table>
-    </div>
-    {% endfor %}
-  {% endfor %}
-  </body>
-</html>
-"""
+
+TEMPLATE = read("simceviz.tpl")
+CSS_PATH = get_path("simceviz.css")
+JS_PATH  = get_path("simceviz.js")
 
 
 class Trace(object):
@@ -237,10 +208,10 @@ def main():
     T = jinja.from_string(TEMPLATE)
 
     print(T.render(
-        css=open(os.path.join(os.path.dirname(__file__), "nusmv-style.css")),
+        css_path = CSS_PATH,
+        js_path = JS_PATH,
         modules=trace.modules,
         trace=trace,
         length=len(trace.modules['input'])))
 
 
-__name__ == "__main__" and main()
