@@ -41,9 +41,9 @@ def read(filename):
         return fp.read()
 
 
-TEMPLATE = read("simceviz.tpl")
-CSS_PATH = get_path("simceviz.css")
-JS_PATH  = get_path("simceviz.js")
+TEMPLATE = read("smvceviz.tpl")
+CSS_PATH = get_path("smvceviz.css")
+JS_PATH  = get_path("smvceviz.js")
 
 
 class Trace(object):

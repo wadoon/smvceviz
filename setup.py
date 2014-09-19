@@ -20,7 +20,7 @@ setup(
     ],
     entry_points = {
         "console_scripts": [
-            'smvceviz = simceviz:main'
+            'smvceviz = smvceviz:main'
         ]
     },
 )
